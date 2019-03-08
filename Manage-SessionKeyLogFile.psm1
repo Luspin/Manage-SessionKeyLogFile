@@ -15,7 +15,7 @@ Get-Help Manage-SessionKeyLogFile -Examples
 
 .NOTES
 Author  : Luís Pinto
-Version : 1.0.190306
+Version : 1.0.190308
 
 .EXAMPLE
 [PS] > Enable-SessionKeyLogFile
@@ -29,8 +29,8 @@ If it is found, then it will be removed.
 
 #>
 
-function Enable-SessionKeyLogFile {
-
+function Enable-SessionKeyLogFile
+{
     # Properties for the "SessionKeyLogFile" Environment Variable:
     $SKLF = @(
         "SSLKEYLOGFILE",                   # Name
@@ -38,18 +38,19 @@ function Enable-SessionKeyLogFile {
         "User"                             # EnvironmentVariableTarget
     ) ;
 
-    if ( $SKLFAssert = [Environment]::GetEnvironmentVariable( $SKLF[0], $SKLF[2] ) ) {
+    if ( $SKLFAssert = [Environment]::GetEnvironmentVariable( $SKLF[0], $SKLF[2] ) )
+    {
         Write-Warning "Environment variable is already set to:`n$($SKLFAssert)"
-    } else {
+    }
+    else
+    {
         [Environment]::SetEnvironmentVariable( $SKLF[0], $SKLF[1], $SKLF[2] ) ;
         Write-Warning "Environment variable is set to:`n$($SKLF[1])"
     }
-
 } # END Enable-SessionKeyLogFile
 
-
-function Disable-SessionKeyLogFile {
-
+function Disable-SessionKeyLogFile
+{
     # Properties for the "SessionKeyLogFile" Environment Variable:
     $SKLF = @(
         "SSLKEYLOGFILE",                   # Name
@@ -57,15 +58,15 @@ function Disable-SessionKeyLogFile {
         "User"                             # EnvironmentVariableTarget
     ) ;
 
-    if ( ![Environment]::GetEnvironmentVariable( $SKLF[0], $SKLF[2] ) ) {
+    if ( ![Environment]::GetEnvironmentVariable( $SKLF[0], $SKLF[2] ) )
+    {
         Write-Warning "Environment variable not found under $($SKLF[0])."
-    } else {
+    }
+    else
+    {
         [Environment]::SetEnvironmentVariable( $SKLF[0], $null, $SKLF[2] ) ;
         Write-Warning "Environment variable $($SKLF[0]) was deleted."
     }
-
 } # END Disable-SessionKeyLogFile
 
-
 Export-ModuleMember -Function * -Alias *
-
