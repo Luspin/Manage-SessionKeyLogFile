@@ -15,7 +15,7 @@ Get-Help Manage-SessionKeyLogFile -Examples
 
 .NOTES
 Author  : Luís Pinto
-Version : 1.0.190308
+Version : 1.0.190311
 
 .EXAMPLE
 [PS] > Enable-SessionKeyLogFile
@@ -38,14 +38,16 @@ function Enable-SessionKeyLogFile
         "User"                             # EnvironmentVariableTarget
     ) ;
 
-    if ( $SKLFAssert = [Environment]::GetEnvironmentVariable( $SKLF[0], $SKLF[2] ) )
+    $SKLFAssert = [Environment]::GetEnvironmentVariable( $SKLF[0], $SKLF[2] ) ;
+
+    if ( !$SKLFAssert )
     {
-        Write-Warning "Environment variable is already set to:`n$($SKLFAssert)"
+        [Environment]::SetEnvironmentVariable( $SKLF[0], $SKLF[1], $SKLF[2] ) ;
+        Write-Warning "Environment variable pointed to:`n$($SKLF[1])"
     }
     else
     {
-        [Environment]::SetEnvironmentVariable( $SKLF[0], $SKLF[1], $SKLF[2] ) ;
-        Write-Warning "Environment variable is set to:`n$($SKLF[1])"
+        Write-Warning "Environment variable is already pointed to:`n$($SKLFAssert)"
     }
 } # END Enable-SessionKeyLogFile
 
@@ -58,14 +60,16 @@ function Disable-SessionKeyLogFile
         "User"                             # EnvironmentVariableTarget
     ) ;
 
-    if ( ![Environment]::GetEnvironmentVariable( $SKLF[0], $SKLF[2] ) )
+    $SKLFAssert = [Environment]::GetEnvironmentVariable( $SKLF[0], $SKLF[2] ) ;
+
+    if ( $SKLFAssert )
     {
-        Write-Warning "Environment variable not found under $($SKLF[0])."
+        [Environment]::SetEnvironmentVariable( $SKLF[0], $null, $SKLF[2] ) ;
+        Write-Warning "Removed the environment variable $($SKLF[0])."
     }
     else
     {
-        [Environment]::SetEnvironmentVariable( $SKLF[0], $null, $SKLF[2] ) ;
-        Write-Warning "Environment variable $($SKLF[0]) was deleted."
+        Write-Warning "Couldn't find the environment variable $($SKLF[0])."
     }
 } # END Disable-SessionKeyLogFile
 

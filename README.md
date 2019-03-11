@@ -7,7 +7,7 @@ This text file can then be used to decrypt SSL connections captured in a Wiresha
 This module can be downloaded and imported into a PowerShell session:  
 `[PS] > Import-Module -Name .\Manage-SessionKeyLogFile.psm1`  
   
-It is also published in the [PowerShell Gallery](https://www.powershellgallery.com/packages/Manage-SessionKeyLogFile/1.0.190307 "Manage-SessionKeyLogFile - 1.0.190307"), so it can be easily installed¹ and updated² via PowerShell:  
+It is also published in the [PowerShell Gallery](https://www.powershellgallery.com/packages/Manage-SessionKeyLogFile/1.0.190311 "Manage-SessionKeyLogFile - 1.0.190311"), so it can be easily installed¹ and updated² via PowerShell:  
 ¹`[PS] > Install-Module -Name Manage-SessionKeyLogFile`  
 ²`[PS] > Update-Module -Name Manage-SessionKeyLogFile`
   
